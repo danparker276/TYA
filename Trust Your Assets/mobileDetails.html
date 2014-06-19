@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trust Your Assets</title>
+    <meta charset="utf-8" />
+    <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+
+
+    <script src="cordova.js"></script>
+    <script src="kendo/js/jquery.min.js"></script>
+    <script src="kendo/js/kendo.mobile.min.js"></script>
+    <script>
+        function loadjscssfile(filename, filetype) {
+            if (filetype == "js") { //if filename is a external JavaScript file
+                // alert('called');
+                var fileref = document.createElement('script')
+                fileref.setAttribute("type", "text/javascript")
+                fileref.setAttribute("src", filename)
+                alert('called');
+            }
+            else if (filetype == "css") { //if filename is an external CSS file
+                var fileref = document.createElement("link")
+                fileref.setAttribute("rel", "stylesheet")
+                fileref.setAttribute("type", "text/css")
+                fileref.setAttribute("href", filename)
+            }
+            if (typeof fileref != "undefined")
+                document.getElementsByTagName("head")[0].appendChild(fileref)
+        }
+
+
+
+        if (screen.width >= 450) {
+
+            loadjscssfile("styles/tyaTablet.css", "css")
+
+
+        }
+        else {
+            loadjscssfile("styles/tyaPhone.css", "css")
+
+        }
+        function navback() {
+            window.location.href = 'index.html';
+        }
+    
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+
+
+    </script>
+
+
+
+
+
+    <script src="scripts/assetDetails.viewmodel.js"></script>
+
+    <script src="scripts/app.js"></script>
+
+    <script>
+
+
+        var assetId = getParameterByName('id');
+      
+        // $("#spId").text(assetId);
+      //  assetId = 106;
+        kendo.data.binders.text = kendo.data.Binder.extend({
+            init: function (element, bindings, options) {
+                kendo.data.Binder.fn.init.call(this, element, bindings, options);
+
+                this.format = $(element).data("format");
+            },
+            refresh: function () {
+                var data = this.bindings["text"].get();
+                if (data) {
+                    $(this.element).text(kendo.toString(data, this.format));
+                }
+            }
+        });
+
+
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+
+
+
+
+
+
+
+    </script>
+    <style>
+        html .km-wp-light .km-content,
+        html .km-wp-light .km-button,
+        html .km-wp-light .km-navbar,
+        html .km-wp-light .km-detail,
+        html .km-wp-light *:not(.k-label) > input:not(.k-input),
+        html .km-wp-light .k-dropdown,
+        html .km-wp-light *:not(.k-label) > textarea,
+        html .km-wp-light *:not(.k-label) > select {
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+
+
+
+            app.assetDetailsService.viewModel.fillAssetId(assetId);
+            app.assetDetailsService.viewModel.fillLastTrades(assetId);
+            app.assetDetailsService.viewModel.fillLinks(assetId);
+          //  app.assetDetailsService.viewModel.fillDayTrades(assetId);
+            // 
+
+
+            //   var divAssetDetails = $("#divAssetDetails");
+            //   kendo.bind(divAssetDetails, app.assetDetailsService.viewModel);
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+    </script>
+    <!--Details-->
+    <div id="tabstrip-details"
+         data-role="view"
+         data-model="app.assetDetailsService.viewModel"
+         data-title="Asset Details">
+        <br />
+        <div  class="view-content">
+
+            <div>
+                <div class="adDivContainer">
+                    <span class="adInfoLabel">Name</span>
+                    <span class="adInfoValue" data-bind="text: assetDetails.name"></span>
+                    <span style="color:darkblue" data-bind="visible: pageLoading">Loading...</span>
+                    <span style="color:darkred" data-bind="visible: errorLoading">Connection Error</span>
+
+                </div>
+                <div class="adDivContainer">
+                    <span class="adInfoLabel">Exchange</span>
+                    <span class="adInfoValue" data-bind="text: assetDetails.assetExchange"></span>
+                </div>
+                <div class="adDivContainer">
+                    <span class="adInfoLabel">ID</span>
+                    <span class="adInfoValue" data-bind="text: assetDetails.cryptoId"></span>
+                </div>
+
+                <div class="adDivContainer">
+                    <span class="adInfoLabel">Category</span>
+                    <span class="adInfoValue" data-bind="text: assetDetails.category"></span>
+                </div>
+                <div class="adDivContainer">
+                    <span class="adInfoLabel">Created</span>
+                    <span class="adInfoValue" data-bind="text: assetDetails.created"></span>
+                </div>
+
+                <div class="adDivContainer">
+                    <span class="adInfoLabel">MarketCap</span>
+                    <span class="adInfoValue" data-format="#,#.#############################" data-bind="text: assetDetails.marketCap"></span>
+                </div>
+
+                <div class="adDivContainer">
+                    <span class="adInfoLabel">Quantity</span>
+                    <span class="adInfoValue" data-format="#,#.#############################" data-bind="text: assetDetails.quantity"></span>
+                </div>
+                <div class="adDivContainer">
+                    <span class="adInfoLabel">Last Trade</span>
+                    <span class="adInfoValue" data-format="#,#.#############################" data-bind="text: assetDetails.tradePrice"></span>
+                </div>
+                <div class="adDivContainer">
+                    <span class="adInfoLabel">Volume</span>
+                    <span class="adInfoValue" data-format="#,#.#############################" data-bind="text: assetDetails.volume"></span>
+                </div>
+                <div class="adDivContainer">
+                    <span class="adInfoLabel">Decimals</span>
+                    <span class="adInfoValue" data-bind="text: assetDetails.decimals"></span>
+                </div>
+
+                <div class="adDivContainer">
+                    <span class="adInfoLabel">Trust (1-10)</span>
+                    <div class="adInfoValue" data-bind="text: assetDetails.trustLevel"></div>
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <!--Description-->
+    <div id="tabstrip-description"
+         data-role="view"
+         data-model="app.assetDetailsService.viewModel"
+         data-title="Description/Review">
+
+        <div class="priceText">
+            <div class="assetDetailPanel">
+
+                <div class="k-block">
+                    <div class="k-header k-shadow">Issuer Description</div>
+                    <div data-bind="text: assetDetails.description">
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="assetDetailPanel">
+            <div class="k-block k-info-colored">
+                <div class="k-header k-shadow k-info-colored">TYA Review</div>
+                <div data-bind="html: assetDetails.tyaReview, visible: userNotLoggedIn()">
+
+                </div>
+
+
+            </div>
+            </div>
+        </div>
+
+    <!--Chart-->
+    <div id="tabstrip-chart"
+         data-role="view"
+         data-model="app.assetDetailsService.viewModel"
+         data-title="Chart">
+
+        <div >
+          
+            <div id="stock-chart" style="height:300px;width:600px;font-size:8px"></div>
+
+            <script>
+                var today = new Date();//.toJSON().slice(0, 10);
+                today.setDate(today.getDate() + 1);
+                today = today.toJSON().slice(0, 10);
+
+                var last30 = new Date();
+                last30.setDate(last30.getDate() - 30);
+                last30 = last30.toJSON().slice(0, 10);
+
+
+                var stockDataSchema = {
+                    model: {
+                        fields: {
+                            Date: {
+                                type: "date"
+                            }
+                        }
+                    }
+                };
+
+                function createChart() {
+                    $("#stock-chart").kendoStockChart({
+                        dataSource: {
+                            serverFiltering: false,
+                            transport: {
+                                read: {
+                                    url: "http://trustyourassets.com/api/Asset/DayTradesAvg?assetId=" + assetId,
+                                    dataType: "jsonp"
+                                },
+                                parameterMap: function (data) {
+                                    return { filter: JSON.stringify(data.filter) };
+                                }
+                            },
+                            schema: stockDataSchema
+                        },
+
+                        dateField: "date",
+                        series: [{
+                            type: "line",
+                            openField: "dayOpen",
+                            highField: "priceMax",
+                            lowField: "priceMin",
+                            closeField: "dayClose"
+                        }],
+                        navigator: {
+                            dataSource: {
+                                transport: {
+                                    read: {
+                                        url: "http://trustyourassets.com/api/Asset/DayTradesAvg?assetId=" + assetId,
+                                        dataType: "jsonp"
+                                    }
+                                },
+                                schema: stockDataSchema
+                            },
+                            series: {
+                                type: "area",
+                                field: "priceMax"
+                            },
+                            select: {
+                                from: last30,
+                                to: today
+                            }
+                        }
+                    });
+                }
+
+                //$(document).ready(createChart);
+               // $(document).bind("kendo:skinChange", createChart);
+            </script>
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <!--Links-->
+    <div id="tabstrip-links"
+         data-role="view"
+         data-model="app.assetDetailsService.viewModel"
+         data-title="Links">
+
+        <div>
+            <span class="lastTradeHead">Link</span><span style="width:auto" class="lastTradeHead">Description</span>
+            <ul data-role="listview" id="listLastTrades"
+                data-bind="source: adLinksDataSource"
+                data-template="links-template"></ul>
+
+
+        </div>
+        <script type="text/x-kendo-tmpl" id="links-template">
+            <div>
+                <div style="margin-left:0px">
+
+                    <div style="display:inline; width:150px"><a href="${link}" target="_blank">Link</a></div><span style="width:auto; margin-left:100px" class="lastTradeCol">${name}</span>
+                </div>
+
+            </div>
+        </script>
+    </div>
+
+    <!--Last Trades-->
+    <div id="tabstrip-trades"
+         data-role="view"
+         data-model="app.assetDetailsService.viewModel"
+         data-title="Last Trades">
+
+        <div >
+            <span class="lastTradeHead">Date</span><span class="lastTradeHead">Price</span><span style="width:auto" class="lastTradeHead">Quantity</span>
+            <ul data-role="listview" id="listLastTrades"
+                data-bind="source: lastTradesDataSource"
+                data-template="lastTrades-template"></ul>
+
+
+        </div>
+        <script type="text/x-kendo-tmpl" id="lastTrades-template">
+            <div>
+                <div style="margin-left:0px">
+               
+                    <span class="lastTradeCol">${tradeDt}</span><span class="lastTradeCol">${price}</span><span style="width:auto" class="lastTradeCol">${quantity}</span>
+                </div>
+
+            </div>
+        </script>
+    </div>
+
+    <!--Coins Template-->
+    <!--Layout-->
+    <div data-role="layout" data-id="tabstrip-layout">
+
+        <!--Header-->
+        <div data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+            </div>
+        </div>
+
+        <!--Footer-->
+        <div data-role="footer">
+            <div data-role="tabstrip">
+                <a onclick="navback()" data-icon="reply">Back</a>
+                <a href="#/" data-icon="bookmarks">Details</a>
+                <a href="#tabstrip-trades" data-icon="recents">Last Trades</a>
+                <a href="#tabstrip-links" data-icon="action">Links</a>
+           
+                <a href="#tabstrip-description" data-icon="about">Description</a>
+
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

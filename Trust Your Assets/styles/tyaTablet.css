@@ -1,0 +1,115 @@
+body
+{
+    height: 100%;
+    width: 100%;
+}
+.faqQuestion
+{
+    font-size: 14px;
+    font-family: Verdana;
+    color: black;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.faqAnswer
+{
+    font-size: 12px;
+    font-family: Verdana;
+    color: #35BFDE;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.centerInnerContent
+{
+    margin: auto;
+    width: 500px;
+}
+
+.adDivContainer
+{
+    margin-top: 5px;
+    text-align: left;
+}
+.adInfoLabel
+{
+    margin-left: 5px;
+    display: inline-block;
+    font-weight: bold;
+    width: 120px;
+    color: #35BFDE;
+}
+.adInfoValue
+{
+    display: inline-block;
+    width: 100px;
+    margin-left: 10px;
+}
+.assetDetailPanel
+{
+    float: left;
+    margin-left: 10px;
+    margin-top: 10px;
+    width: 400px;
+}
+
+.topSearchList
+{
+    display: inline;
+    margin-left: 10px;
+}
+
+.topCurrencyLabel
+{
+    font-family: Verdana;
+    font-size: 11px;
+    color: darkgray;
+}
+
+.topCurrencyValue
+{
+    font-family: Verdana;
+    font-size: 12px;
+    color: #35BFDE;
+}
+
+.lastTradeCol
+{
+    font-size: 10px;
+    width: 150px;
+    display: inline-block;
+}
+            
+.lastTradeHead
+{
+    font-size: 10px;
+    width: 150px;
+    font-weight: bold;
+    display: inline-block;
+}
+.assetButton
+{
+    font-size: 12px; 
+    font-weight: bold; 
+    width: 100px
+}
+           
+.labelAssetList
+{
+    font-size: 10px; 
+    font-weight: bold; 
+
+}
+
+.valueAssetList
+{
+    display:inline-block;
+    color: #35BFDE;
+    font-size: 12px; 
+    font-weight: bold; 
+    width:100px;
+
+}
+     
+          
+ 

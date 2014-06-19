@@ -1,123 +1,283 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>Trust Your Assets</title>
     <meta charset="utf-8" />
     <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
-    <link href="styles/main.css" rel="stylesheet" />
+
 
     <script src="cordova.js"></script>
     <script src="kendo/js/jquery.min.js"></script>
     <script src="kendo/js/kendo.mobile.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
 
-    <script src="scripts/app.js"></script>
-    <script src="scripts/login.js"></script>
-    <script src="scripts/location.js"></script>
-    <script src="scripts/weather.js"></script>
-</head>
-<body>
-    <!--Home View-->
-    <div id="tabstrip-home"
-        data-role="view"
-        data-title="Home">
-        <header data-role="header">
-            <div data-role="navbar">
-                <span data-role="view-title"></span>
-                <a id="skin-change" data-role="button" data-align="right" data-click="app.changeSkin">Flat</a>
-            </div>
-        </header>
+    <script>
+        kendo.data.binders.text = kendo.data.Binder.extend({
+            init: function (element, bindings, options) {
+                kendo.data.Binder.fn.init.call(this, element, bindings, options);
 
-        <h3>Welcome!</h3>
-        <p>
-            Telerik AppBuilder&trade; enables you to build cross-platform device applications regardless of your
-            development platform by combining the convenience of a local development toolset with the
-            power and flexibility of the cloud.
-        </p>
-        <div class="welcome-image"></div>
-    </div>
+                this.format = $(element).data("format");
+            },
+            refresh: function () {
+                var data = this.bindings["text"].get();
+                if (data) {
+                    $(this.element).text(kendo.toString(data, this.format));
+                }
+            }
+        });
 
-    <!--Login View-->
-    <div id="tabstrip-login"
-        data-role="view"
-        data-title="Login"
-        data-model="app.loginService.viewModel">
+        function loadjscssfile(filename, filetype) {
+            if (filetype == "js") { //if filename is a external JavaScript file
+                // alert('called');
+                var fileref = document.createElement('script')
+                fileref.setAttribute("type", "text/javascript")
+                fileref.setAttribute("src", filename)
+                alert('called');
+            }
+            else if (filetype == "css") { //if filename is an external CSS file
+                var fileref = document.createElement("link")
+                fileref.setAttribute("rel", "stylesheet")
+                fileref.setAttribute("type", "text/css")
+                fileref.setAttribute("href", filename)
+            }
+            if (typeof fileref != "undefined")
+                document.getElementsByTagName("head")[0].appendChild(fileref)
+        }
+        function clickAssetDetails(assetId) {
+            window.location.href = 'mobileDetails.html?id=' + assetId;
 
-        <div class="logo-image"></div>
-        <div>
-            <h3 data-bind="visible: isLoggedIn">Welcome, <span data-bind="    text: username"></span>!</h3>
-            <input id="logout" type="submit" data-role="button" data-bind="click: onLogout, visible: isLoggedIn" value="Logout" class="login-button" />
-        </div>
-        <form data-bind="events: { keyup: checkEnter }">
-            <h3 data-bind="invisible: isLoggedIn">Enter your credentials:</h3>
-            <ul data-role="listview" data-style="inset" data-bind="invisible: isLoggedIn">
-                <li>
-                    <label>
-                        <div>Username</div>
-                        <input type="text" data-bind="value: username" />
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <div>Password</div>
-                        <input type="password" data-bind="value: password" />
-                    </label>
-                </li>
-            </ul>
-            <input id="login" type="submit" data-role="button" data-bind="click: onLogin, invisible: isLoggedIn" value="Login" class="login-button" />
-        </form>
-    </div>
+        }
 
-    <!--Location View-->
-    <div id="tabstrip-location"
-        data-role="view"
-        data-title="Location"
-        data-init="app.locationService.initLocation"
-        data-show="app.locationService.show"
-        data-hide="app.locationService.hide"
-        data-model="app.locationService.viewModel"
-        data-stretch="true">
 
-        <div id="map-canvas" class="map" data-bind="visible: isGoogleMapsInitialized"></div>
+        if (screen.width >= 450) {
 
-        <div id="no-map" data-bind="invisible: isGoogleMapsInitialized">
-            <h3>Location requires internet connection to display the map.</h3>
-        </div>
-        <div id="map-search-wrap" class="map-tools" data-bind="visible: isGoogleMapsInitialized">
-            <div>
-                <button id="map-navigate-home" class="map-tools-button home" data-bind="click: onNavigateHome"></button>
-                <input id="map-address" type="search" class="map-tools-input" data-bind="value: address" placeholder="Address" />
-                <button id="map-search" class="map-tools-button search" data-bind="click: onSearchAddress"></button>
-            </div>
-        </div>
-    </div>
+            loadjscssfile("styles/tyaTablet.css", "css")
 
-    <!--Weather View-->
-    <div id="tabstrip-weather"
-        data-role="view"
-        data-title="Weather"
-        data-model="app.weatherService.viewModel">
 
-        <ul data-role="listview" data-style="inset"
-            data-bind="source: weatherDataSource"
-            data-template="weather-forecast-template">
-        </ul>
-    </div>
+        }
+        else {
+            loadjscssfile("styles/tyaTablet.css", "css")
 
-    <!--Weather forecast template-->
-    <script id="weather-forecast-template" type="text/x-kendo-tmpl">
-        <div class="w-item-template">
-            <span class="w-icon ${image}"></span>
-            <h4 class="w-date">${day}</h4>
-            <div class="w-temp">
-                <span>${highTemperature}<sup>&deg;</sup></span>
-                <span>${lowTemperature}<sup>&deg;</sup></span>
-            </div>
-        </div>
+        }
+
     </script>
 
+
+
+
+    <script src="scripts/assetList.viewmodel.js"></script>
+
+    <script src="scripts/app.js"></script>
+
+    <style>
+        html .km-wp-light .km-content,
+        html .km-wp-light .km-button,
+        html .km-wp-light .km-navbar,
+        html .km-wp-light .km-detail,
+        html .km-wp-light *:not(.k-label) > input:not(.k-input),
+        html .km-wp-light .k-dropdown,
+        html .km-wp-light *:not(.k-label) > textarea,
+        html .km-wp-light *:not(.k-label) > select {
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!--Home-->
+    <div id="tabstrip-home"
+         data-role="view"
+         data-model="app.assetListService.viewModel"
+         data-title="TYA Asset List" >
+        <br />
+        <div class="view-content">
+           
+            <ul data-role="listview" id="listAssets"
+                data-bind="source: assetListDataSource"
+                data-template="coins-template"></ul>
+     
+       
+            <br>
+            <div style="padding-left:1em">
+
+                <br />
+                <button id="btnRefresh" onclick="refresh()">Refresh</button>
+                <br><br>
+
+
+            </div>
+            <script type="text/x-kendo-tmpl" id="coins-template">
+                <div>
+                    <div style="margin-left:0px">
+                        <button class='k-button assetButton' style='float:left;font-size: 11px; font-weight: bold;  width: 100px' onclick='clickAssetDetails(${assetId})'>${name}</button>
+                
+                     
+                        <div style="float:left;display:inline;margin-left:10px;height:25px"><span class="labelAssetList">Last Price</span> 
+                            <span style="width:80px" class="valueAssetList">${tradePrice}</span></div>
+                        <div style="float: left; display: inline; height: 25px">
+                            <span class="labelAssetList">Trades 24h</span> <span style="width:80px" class="valueAssetList">${trades24h}</span>
+                            </div>
+                        <div style="float: left; display: inline; height: 25px">
+                            <span class="labelAssetList">Vol 24h</span> <span class="valueAssetList">${volume24h}</span>
+                            </div>
+                            <span class="valueAssetList">${category}</span>
+                            <span class="valueAssetList">${assetExchange}</span>
+
+                            <img src='/images/r#=trustLevel#.png' />
+                        </div>
+
+                </div>
+            </script>
+
+            <script>
+
+                $("#listAssets").kendoMobileListView({
+                    template: $("#coins-template").text(),
+                    filterable: {
+                        field: "name",
+                        operator: "startswith"
+                    }
+                   // endlessScroll: true
+                });
+
+
+
+
+                function refresh() {
+            
+                    app.assetListService.viewModel.getAboveTrades();
+                    app.assetListService.viewModel.setShowScams();
+                    var sortval = $("#ddSort").val();
+            
+
+          
+
+                    var dataSource =  app.assetListService.viewModel.assetListDataSource;
+                    var dsSort = [];
+                    if ( sortval == 1){
+                        dsSort.push({ field: "fieldName1", dir: "asc" });
+                    }
+                    else if ( sortval == 2){
+                        dsSort.push({ field: "name", dir: "asc" });
+                    }
+                    else if ( sortval == 3){
+                        dsSort.push({ field: "name", dir: "desc" });
+                    }
+                    else if ( sortval == 4){
+                        dsSort.push({ field: "created", dir: "desc" });
+                    }
+
+                    dataSource.sort(dsSort);
+
+              
+
+                    /*
+                        var search = { logic: "and", filters: [] };
+                        
+                        if (!isChecked) {
+                            search.filters.push({ field: "status", operator: "equal", value: 0 });
+                        }
+                           dataSource.data("kendoGrid").dataSource.filter(search
+                     
+                        */
+                    
+                    app.assetListService.viewModel.assetListDataSource.read();
+                    window.location.href = '#/';
+
+                }
+               // var sortList= 1;
+                $(document).ready(function () {
+                    // Send an AJAX request
+                    // $("#btnRefresh").kendoButton().width(180);
+                    $("#btnRefresh").kendoMobileButton();
+              
+                    //kendo.bind(gridList, app.assetListService.viewModel);
+                    app.assetListService.viewModel.loadList();
+
+
+
+
+
+
+                });
+
+
+
+
+            </script>
+
+
+
+
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <!--About-->
+    <div id="tabstrip-about"
+         data-role="view"
+
+         data-title="About">
+
+        <div class="priceText">
+            <p>Trust Your Assets</p>
+            <p>We categorize, rate, and review descentralized assets</p>
+            <p>For Informational purposes only</p>
+            <p>We do not buy, sell or trade assets</p>
+
+        </div>
+    </div>
+
+    <!--Settings-->
+    <div id="tabstrip-settings"
+         data-role="view"
+
+         data-model="app.assetListService.viewModel"
+         data-title="Settings">
+        <style scoped>
+            .divFilterOptions {
+                margin-top:10px;
+            }
+        </style>
+
+        <div class="priceText">
+            <p>Filter List By</p>
+
+            <div class="divFilterOptions">
+                <label for="cbJunk">Show Scams/Junk</label>
+                <input data-bind="checked: showScams" type="checkbox" id="cbJunk" />
+            </div>
+
+            <div class="divFilterOptions">
+                <label for="cbNonTraded">Show Non Traded</label>
+                <input data-bind="checked: showNonTrades" type="checkbox" id="cbNonTraded" />
+            </div>
+            <div class="divFilterOptions">
+                <label  for="ddSort">Sort By</label>
+                <select id="ddSort">
+                    <option selected="selected" value="1">Trades 24h</option>
+                    <option value="2">Name Ascending</option>
+                    <option value="3">Name Decending</option>
+                    <option value="4">New</option>
+                </select>
+            </div>
+
+            <button id="btnDefaults" style="margin-top:20px" onclick="refresh()">Filter</button>
+            <br /><br />
+
+
+
+        </div>
+    </div>
+
+    <!--Coins Template-->
     <!--Layout-->
     <div data-role="layout" data-id="tabstrip-layout">
+
         <!--Header-->
         <div data-role="header">
             <div data-role="navbar">
@@ -129,9 +289,9 @@
         <div data-role="footer">
             <div data-role="tabstrip">
                 <a href="#/" data-icon="home">Home</a>
-                <a href="#tabstrip-login" data-icon="contacts">Login</a>
-                <a href="#tabstrip-location" data-icon="search">Location</a>
-                <a href="#tabstrip-weather" data-icon="globe">Weather</a>
+                <a href="#tabstrip-settings" data-icon="settings">Settings</a>
+                <a href="#tabstrip-about" data-icon="about">About</a>
+
             </div>
         </div>
     </div>
