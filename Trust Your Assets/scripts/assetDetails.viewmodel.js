@@ -134,7 +134,7 @@
                     read: {
 
                         url: 'http://trustyourassets.com/api/Asset/DayTradesAvg?assetId=' + inAssetId,
-                        dataType: "json", type: "GET"
+                        dataType: "jsonp", type: "GET"
                     }
 
                 },

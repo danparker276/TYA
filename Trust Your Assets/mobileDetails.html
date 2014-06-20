@@ -219,30 +219,24 @@
          data-model="app.assetDetailsService.viewModel"
          data-title="Description/Review">
 
-        <div class="priceText">
-            <div class="assetDetailPanel">
 
-                <div class="k-block">
-                    <div class="k-header k-shadow">Issuer Description</div>
+
+                <div data-role="scroller" class="scroller-content">
+                <div style="font-weight:bold;margin-top:10px">Issuer Description</div>
                     <div data-bind="text: assetDetails.description">
 
-                    </div>
-                </div>
+                    
+          
+                 <div style="font-weight:bold;margin-top:10px">TYA Review</div>
+                <div data-bind="html: assetDetails.tyaReview">
 
-            </div>
+         
 
+                        </div>
+ 
         </div>
-        <div class="assetDetailPanel">
-            <div class="k-block k-info-colored">
-                <div class="k-header k-shadow k-info-colored">TYA Review</div>
-                <div data-bind="html: assetDetails.tyaReview, visible: userNotLoggedIn()">
-
-                </div>
-
-
-            </div>
-            </div>
         </div>
+           </div>
 
     <!--Chart-->
     <div id="tabstrip-chart"
