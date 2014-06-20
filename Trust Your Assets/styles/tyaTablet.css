@@ -76,14 +76,14 @@ body
 .lastTradeCol
 {
     font-size: 10px;
-    width: 150px;
+    width: 100px;
     display: inline-block;
 }
             
 .lastTradeHead
 {
     font-size: 10px;
-    width: 150px;
+    width: 100px;
     font-weight: bold;
     display: inline-block;
 }

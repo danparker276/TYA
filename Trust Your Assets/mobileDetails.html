@@ -50,7 +50,16 @@
                 results = regex.exec(location.search);
             return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         }
+        if (screen.width >= 450) {
 
+            loadjscssfile("styles/tyaTablet.css", "css")
+
+
+        }
+        else {
+            loadjscssfile("styles/tyaTablet.css", "css")
+
+        }
 
 
     </script>
@@ -223,18 +232,18 @@
 
                 <div data-role="scroller" class="scroller-content">
                 <div style="font-weight:bold;margin-top:10px">Issuer Description</div>
-                    <div data-bind="text: assetDetails.description">
-
+                    <div style="margin:10px" data-bind="text: assetDetails.description">
+ 							</div>
                     
           
-                 <div style="font-weight:bold;margin-top:10px">TYA Review</div>
-                <div data-bind="html: assetDetails.tyaReview">
+                    <div style="color:#35BFDE;font-weight:bold;margin-top:10px">TYA Review</div>
+                <div style="margin:10px;color:#35BFDE;" data-bind="html: assetDetails.tyaReview"></div>
 
          
 
-                        </div>
+                       
  
-        </div>
+        
         </div>
            </div>
 
